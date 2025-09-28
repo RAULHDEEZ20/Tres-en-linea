@@ -61,113 +61,120 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0f0c29] via-[#161339] to-[#24243e] flex items-center justify-center p-4">
-      <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/10 max-w-lg w-full">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-[#0f0c29] via-[#161339] to-[#24243e] p-4">
 
-        {/* Título del juego */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2 flex items-center justify-center gap-2 drop-shadow-lg">
-            <Users />
-            Tres en línea
-          </h1>
-          <p className="text-cyan-300 text-lg">¡Consigue 3 en línea para ganar!</p>
-        </div>
+      {/* Contenedor principal */}
+      <div className="flex-grow flex items-center justify-center">
+        <div className="bg-white/5 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/10 max-w-lg w-full">
 
-        {/* Marcador de puntuaciones */}
-        <div className="grid grid-cols-3 gap-4 mb-6 text-center">
-          <div className="bg-cyan-500/20 rounded-lg p-3 border border-cyan-400/30">
-            <div className="text-cyan-300 text-sm font-medium">Jugador X</div>
-            <div className="text-2xl font-bold text-white">{scores.X}</div>
+          {/* Título del juego */}
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold text-white mb-2 flex items-center justify-center gap-2 drop-shadow-lg">
+              <Users />
+              Tres en línea
+            </h1>
+            <p className="text-cyan-300 text-lg">¡Consigue 3 en línea para ganar!</p>
           </div>
-          <div className="bg-gray-500/20 rounded-lg p-3 border border-gray-400/30">
-            <div className="text-gray-300 text-sm font-medium">Empates</div>
-            <div className="text-2xl font-bold text-white">{scores.ties}</div>
-          </div>
-          <div className="bg-pink-500/20 rounded-lg p-3 border border-pink-400/30">
-            <div className="text-pink-300 text-sm font-medium">Jugador O</div>
-            <div className="text-2xl font-bold text-white">{scores.O}</div>
-          </div>
-        </div>
 
-        {/* Indicador de turno actual */}
-        <div className="text-center mb-6">
-          {!gameOver ? (
-            <p className="text-xl text-white">
-              Turno del jugador:
-              <span className={`font-bold ml-2 ${currentPlayer === 'X' ? 'text-cyan-400' : 'text-pink-400'}`}>
-                {currentPlayer}
-              </span>
-            </p>
-          ) : (
-            <div className="flex items-center justify-center gap-2 text-xl">
-              <Trophy />
-              <span className="text-white font-bold">
-                {winner === 'tie' ? '¡Empate!' : `¡Ganador: ${winner}!`}
-              </span>
+          {/* Marcador de puntuaciones */}
+          <div className="grid grid-cols-3 gap-4 mb-6 text-center">
+            <div className="bg-cyan-500/20 rounded-lg p-3 border border-cyan-400/30">
+              <div className="text-cyan-300 text-sm font-medium">Jugador X</div>
+              <div className="text-2xl font-bold text-white">{scores.X}</div>
             </div>
-          )}
-        </div>
-
-        {/* Tablero de juego */}
-        <div className="flex justify-center mb-6">
-          <div className="grid grid-cols-3 gap-3">
-            {board.map((cell, index) => (
-              <button
-                key={index}
-                onClick={() => handleCellClick(index)}
-                disabled={gameOver || cell}
-                className={`
-                  w-20 h-20 text-3xl font-bold rounded-lg border-2 transition-all duration-300
-                  focus:outline-none focus:ring-2 focus:ring-cyan-400/50
-                  ${cell ? 'cursor-not-allowed' : 'hover:bg-cyan-600/20 cursor-pointer hover:scale-110 active:scale-95'}
-                  ${cell === 'X'
-                    ? 'bg-cyan-500/30 border-cyan-400 text-cyan-200'
-                    : cell === 'O'
-                      ? 'bg-pink-500/30 border-pink-400 text-pink-200'
-                      : 'bg-white/5 border-white/20 text-white hover:border-white/50'
-                  }
-                `}
-              >
-                {cell}
-              </button>
-            ))}
+            <div className="bg-gray-500/20 rounded-lg p-3 border border-gray-400/30">
+              <div className="text-gray-300 text-sm font-medium">Empates</div>
+              <div className="text-2xl font-bold text-white">{scores.ties}</div>
+            </div>
+            <div className="bg-pink-500/20 rounded-lg p-3 border border-pink-400/30">
+              <div className="text-pink-300 text-sm font-medium">Jugador O</div>
+              <div className="text-2xl font-bold text-white">{scores.O}</div>
+            </div>
           </div>
+
+          {/* Indicador de turno actual */}
+          <div className="text-center mb-6">
+            {!gameOver ? (
+              <p className="text-xl text-white">
+                Turno del jugador:
+                <span className={`font-bold ml-2 ${currentPlayer === 'X' ? 'text-cyan-400' : 'text-pink-400'}`}>
+                  {currentPlayer}
+                </span>
+              </p>
+            ) : (
+              <div className="flex items-center justify-center gap-2 text-xl">
+                <Trophy />
+                <span className="text-white font-bold">
+                  {winner === 'tie' ? '¡Empate!' : `¡Ganador: ${winner}!`}
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* Tablero de juego */}
+          <div className="flex justify-center mb-6">
+            <div className="grid grid-cols-3 gap-3">
+              {board.map((cell, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleCellClick(index)}
+                  disabled={gameOver || cell}
+                  className={`
+                    w-20 h-20 text-3xl font-bold rounded-lg border-2 transition-all duration-300
+                    focus:outline-none focus:ring-2 focus:ring-cyan-400/50
+                    ${cell ? 'cursor-not-allowed' : 'hover:bg-cyan-600/20 cursor-pointer hover:scale-110 active:scale-95'}
+                    ${cell === 'X'
+                      ? 'bg-cyan-500/30 border-cyan-400 text-cyan-200'
+                      : cell === 'O'
+                        ? 'bg-pink-500/30 border-pink-400 text-pink-200'
+                        : 'bg-white/5 border-white/20 text-white hover:border-white/50'
+                    }
+                  `}
+                >
+                  {cell}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Botones de control */}
+          <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
+            <button
+              onClick={resetGame}
+              className="flex-1 sm:flex-none flex items-center justify-center px-6 py-3 bg-cyan-600 hover:bg-cyan-700 
+                       text-white rounded-lg transition-all duration-300 font-medium
+                       focus:outline-none focus:ring-2 focus:ring-cyan-400 min-w-[150px]"
+            >
+              Nueva Partida
+            </button>
+
+            <button
+              onClick={resetAll}
+              className="flex-1 sm:flex-none flex items-center justify-center px-6 py-3 bg-pink-600 hover:bg-pink-700 
+                       text-white rounded-lg transition-all duration-300 font-medium
+                       focus:outline-none focus:ring-2 focus:ring-pink-400 min-w-[150px]"
+            >
+              Reiniciar Todo
+            </button>
+          </div>
+
+          {/* Explicación de cómo jugar */}
+          <div className="text-center text-sm text-cyan-200 space-y-1">
+            <p className="flex items-center justify-center gap-2">
+              <span>🎯</span>
+              Haz clic en una casilla vacía para colocar tu símbolo
+            </p>
+
+          </div>
+
         </div>
-
-        {/* Botones de control */}
-        <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
-          <button
-            onClick={resetGame}
-            className="flex-1 sm:flex-none flex items-center justify-center px-6 py-3 bg-cyan-600 hover:bg-cyan-700 
-                     text-white rounded-lg transition-all duration-300 font-medium
-                     focus:outline-none focus:ring-2 focus:ring-cyan-400 min-w-[150px]"
-          >
-            Nueva Partida
-          </button>
-
-          <button
-            onClick={resetAll}
-            className="flex-1 sm:flex-none flex items-center justify-center px-6 py-3 bg-pink-600 hover:bg-pink-700 
-                     text-white rounded-lg transition-all duration-300 font-medium
-                     focus:outline-none focus:ring-2 focus:ring-pink-400 min-w-[150px]"
-          >
-            Reiniciar Todo
-          </button>
-        </div>
-
-        {/* Explicación de cómo jugar */}
-        <div className="text-center text-sm text-cyan-200 space-y-1">
-          <p className="flex items-center justify-center gap-2">
-            <span>🎯</span>
-            Haz clic en una casilla vacía para colocar tu símbolo
-          </p>
-          <p className="flex items-center justify-center gap-2">
-            <span>🏆</span>
-            Consigue 3 símbolos en línea para ganar
-          </p>
-        </div>
-
       </div>
+
+      {/* Footer */}
+      <footer className="flex items-center justify-center text-white text-xs py-1 border-t border-white/10">
+        Diseñado y desarrollado por Raúl Hernández Martínez. 2025.
+      </footer>
+
     </div>
   );
 }
